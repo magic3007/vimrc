@@ -287,8 +287,14 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 " => Editing mappings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" exit insert mode quickly
-imap jk <ESC>
+" 映射 H 键到 ^ 键，跳转到行首
+nnoremap H ^
+
+" 映射 L 键到 g_ 组合键，跳转到行尾（除行末空白字符）
+nnoremap L g_
+
+" exit insert mode quickly, 但是会延缓输入j的速度，建议不开启
+" imap jk <ESC>
 
 " Remap VIM 0 to first non-blank character
 map 0 ^

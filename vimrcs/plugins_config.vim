@@ -9,10 +9,17 @@
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
 let s:vim_runtime = expand('<sfile>:p:h')."/.."
-call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
-call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
+" Use local disk cache for plugins if available (faster on network filesystems)
+let s:vim_plugins = expand('~/.vim_plugins')
+if isdirectory(s:vim_plugins)
+    call pathogen#infect(s:vim_plugins.'/sources_forked/{}')
+    call pathogen#infect(s:vim_plugins.'/sources_non_forked/{}')
+else
+    call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
+    call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
+endif
 call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
-call pathogen#helptags()
+" call pathogen#helptags()  " disabled: slow on network fs, run manually with :Helptags when needed
 
 
 """"""""""""""""""""""""""""""
@@ -95,7 +102,7 @@ autocmd BufEnter * if bufname('#') =~ 'NERD_tree_\d\+' && bufname('%') !~ 'NERD_
     \ let buf=bufnr() | buffer# | execute "normal! \<C-W>w" | execute 'buffer'.buf | endif
 
 " Open the existing NERDTree on each new tab.
-autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif
+" autocmd BufWinEnter * if getcmdwintype() == '' | silent NERDTreeMirror | endif  " disabled: slows down every buffer open
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => vim-multiple-cursors
